@@ -1,0 +1,51 @@
+
+#expenses
+{
+    color: #000000;
+}
+#incomes
+{
+    color: #000000;
+}
+table.dialogLayout
+{
+	width: 100%;
+}
+td.twocol
+{
+	width: 50%;
+	#background-color: red;
+}
+table.report
+{
+	border-collapse: collapse;
+	border: solid 5px;
+}
+table.report tr.report_row>td
+{
+	border-bottom: solid thin;
+	padding-top: 10px;
+	padding-bottom: 2px;
+	padding-right:15px;
+	padding-left:15px;
+}
+table.report th
+{
+	padding-top: 10px;
+	padding-bottom: 2px;
+	border-bottom: solid 5px;
+	border-left: solid 1px;
+	border-right: solid 1px;
+}
+table.report td.amount
+{
+	text-align: right;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+table.report td.description
+{
+	text-align: left;
+	padding-left: 25px;
+	
+}

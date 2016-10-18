@@ -1,0 +1,88 @@
+CREATE  TABLE IF NOT EXISTS `budget`.`budgetUser` (
+  `username` VARCHAR(255) NOT NULL ,
+  `password` VARCHAR(255) NULL ,
+  `firstname` VARCHAR(255) NULL ,
+  `lastname` VARCHAR(255) NULL ,
+  PRIMARY KEY (`username`) )
+ENGINE = InnoDB;
+
+CREATE  TABLE IF NOT EXISTS `budget`.`category` (
+  `categoryID` INT NOT NULL AUTO_INCREMENT ,
+  `description` VARCHAR(255) NULL ,
+  PRIMARY KEY (`categoryID`) )
+ENGINE = InnoDB;
+
+CREATE  TABLE IF NOT EXISTS `budget`.`frequency` (
+  `frequencyID` INT NOT NULL AUTO_INCREMENT ,
+  `description` VARCHAR(255) NULL ,
+  `value` VARCHAR(45) NULL ,
+  PRIMARY KEY (`frequencyID`) )
+ENGINE = InnoDB;
+
+CREATE  TABLE IF NOT EXISTS `budget`.`expense` (
+  `expenseID` INT NOT NULL AUTO_INCREMENT ,
+  `description` VARCHAR(255) NULL ,
+  `frequencyID` INT NOT NULL ,
+  `amount` DECIMAL(20) NULL ,
+  `categoryID` INT NOT NULL ,
+  PRIMARY KEY (`expenseID`) ,
+  INDEX `fk_expense_frequency1` (`frequencyID` ASC) ,
+  INDEX `fk_expense_category1` (`categoryID` ASC) ,
+  CONSTRAINT `fk_expense_frequency1`
+    FOREIGN KEY (`frequencyID` )
+    REFERENCES `budget`.`frequency` (`frequencyID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_expense_category1`
+    FOREIGN KEY (`categoryID` )
+    REFERENCES `budget`.`category` (`categoryID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE  TABLE IF NOT EXISTS `budget`.`income` (
+  `incomeID` INT NOT NULL AUTO_INCREMENT ,
+  `username` VARCHAR(255) NOT NULL ,
+  `frequencyID` INT NOT NULL ,
+  `amount` DECIMAL(20) NULL ,
+  `description` VARCHAR(255) NULL ,
+  PRIMARY KEY (`incomeID`) ,
+  INDEX `fk_income_budgetUser` (`username` ASC) ,
+  INDEX `fk_income_frequency1` (`frequencyID` ASC) ,
+  CONSTRAINT `fk_income_budgetUser`
+    FOREIGN KEY (`username` )
+    REFERENCES `budget`.`budgetUser` (`username` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_income_frequency1`
+    FOREIGN KEY (`frequencyID` )
+    REFERENCES `budget`.`frequency` (`frequencyID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+default value entries
+
+budgetUser
+
+insert into budgetUser (username,password,firstname,lastname) values ("robertr","password","Robert", "Robinson");
+
+frequency
+
+insert into frequency (description,value) values ("day","1") , ("week","7.01923077"),("fortnight","14.0384615"), ("month","30.4166667"),("bimonth","60.8333333"),("quarter","91.25"),("year","365");
+
+income
+
+insert into income (username, frequencyID, description, amount) values ("robertr", 4, "MainJob", 123456);
+
+category
+
+insert into category (description) values ("general"), ("Other Items");
+
+expense
+
+insert into expense (description, frequencyID, amount, categoryID) values ("Rent", 4, 100000, 1), ("Food Shopping", 3, 40000, 1), ("Electricty", 4, 20000, 2), ("Internet/phone", 4, 10000, 2);
+
+
+
